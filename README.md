@@ -14,7 +14,7 @@ In the project's `renovate.json5`:
 }
 ```
 
-Renovate bumps that tag when this repository releases a new one.
+Renovate bumps that tag when this repository releases a new one. This repository uses its own preset from `main`.
 
 ## What the preset does
 
