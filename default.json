@@ -159,5 +159,6 @@
       "* 0-5 * * *"
     ]
   },
-  "minimumReleaseAge": "0 days"
+  "minimumReleaseAge": "0 days",
+  "automerge": "yes"
 }
