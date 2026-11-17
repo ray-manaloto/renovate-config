@@ -19,12 +19,6 @@ jobs:
     name: Validate
     runs-on: ubuntu-26.04
     timeout-minutes: 10
-    env:
-      # As in risu729/renovate-config, bun installs npm tools. aube, the
-      # default, refuses renovate 44.251.0: @yarnpkg/libzip@3.2.2 has no
-      # provenance while 3.2.0 had it. Set here, not in mise.toml, so a
-      # global aube-installed toolset is not disturbed.
-      MISE_NPM_PACKAGE_MANAGER: bun
     permissions:
       contents: read # for checkout
     steps:
