@@ -1,0 +1,52 @@
+name: CI
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+permissions: {}
+defaults:
+  run:
+    shell: bash
+jobs:
+  validate:
+    name: Validate
+    runs-on: ubuntu-26.04
+    timeout-minutes: 10
+    env:
+      # As in risu729/renovate-config, bun installs npm tools. aube, the
+      # default, refuses renovate 44.251.0: @yarnpkg/libzip@3.2.2 has no
+      # provenance while 3.2.0 had it. Set here, not in mise.toml, so a
+      # global aube-installed toolset is not disturbed.
+      MISE_NPM_PACKAGE_MANAGER: bun
+    permissions:
+      contents: read # for checkout
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install mise
+        uses: jdx/mise-action@236a21c3b91f5db6d4e174b348674a0f0caac06d # v5.2.9
+        with:
+          version: 2026.11.9
+      - name: Validate the Renovate configs
+        run: mise run check
+  ci-check:
+    # The one required check. It runs only when a needed job failed or was
+    # cancelled, and a skipped required check counts as passed.
+    name: CI Check
+    needs:
+      - validate
+    if: ${{ !cancelled() && (contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')) }}
+    runs-on: ubuntu-26.04
+    timeout-minutes: 5
+    permissions: {}
+    steps:
+      - run: exit 1

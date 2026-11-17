@@ -1,0 +1,14 @@
+{
+	// ref: https://docs.renovatebot.com/configuration-options/
+	$schema: "https://docs.renovatebot.com/renovate-schema.json",
+	extends: ["github>ray-manaloto/renovate-config"],
+	customManagers: [
+		{
+			customType: "regex",
+			managerFilePatterns: ["/^README.md$/"],
+			matchStrings: ["github>ray-manaloto/renovate-config#(?<currentValue>v[0-9.]+)"],
+			datasourceTemplate: "github-releases",
+			depNameTemplate: "ray-manaloto/renovate-config",
+		},
+	],
+}

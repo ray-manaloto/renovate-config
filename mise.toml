@@ -1,0 +1,17 @@
+# ref: https://mise.jdx.dev/configuration.html
+#:schema https://mise.jdx.dev/schema/mise.json
+
+min_version = "2026.11.9"
+
+[tools]
+bun = "1.4.4"
+"npm:renovate" = "44.251.0"
+
+[settings]
+lockfile = true
+lockfile_platforms = ["linux-x64", "macos-arm64"]
+
+
+[tasks.check]
+description = "Validate the preset and this repository's own Renovate config"
+run = "renovate-config-validator --strict default.json .github/renovate.json5"

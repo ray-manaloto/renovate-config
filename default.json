@@ -1,0 +1,163 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:best-practices",
+    ":pinVersions",
+    ":automergeMinor",
+    ":automergeDigest",
+    ":prHourlyLimitNone",
+    ":prConcurrentLimitNone"
+  ],
+  "ignorePresets": [
+    ":ignoreModulesAndTests",
+    "security:minimumReleaseAgeNpm"
+  ],
+  "labels": [
+    "dependencies",
+    "{{#unless (or (equals manager 'regex') (equals manager 'jsonata'))}}{{manager}}{{/unless}}"
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Updates hk Pkl package imports",
+      "managerFilePatterns": [
+        "/(^|/)hk\\.pkl$/"
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "hk",
+      "packageNameTemplate": "jdx/hk",
+      "extractVersionTemplate": "^v(?<version>.+)$",
+      "matchStrings": [
+        "package://github\\.com/jdx/hk/releases/download/v(?<currentValue>[^/]+)/hk@[^#]+#"
+      ],
+      "autoReplaceStringTemplate": "package://github.com/jdx/hk/releases/download/v{{{newValue}}}/hk@{{{newValue}}}#"
+    },
+    {
+      "customType": "regex",
+      "description": "Updates ray-manaloto hk-config preset imports in hk.pkl",
+      "managerFilePatterns": [
+        "/(^|/)hk\\.pkl$/"
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "hk-config",
+      "packageNameTemplate": "ray-manaloto/hk-config",
+      "extractVersionTemplate": "^v(?<version>.+)$",
+      "matchStrings": [
+        "https://raw\\.githubusercontent\\.com/ray-manaloto/hk-config/v(?<currentValue>[^/]+)/"
+      ],
+      "autoReplaceStringTemplate": "https://raw.githubusercontent.com/ray-manaloto/hk-config/v{{{newValue}}}/"
+    },
+    {
+      "customType": "jsonata",
+      "description": "Updates mise versions in GitHub Actions",
+      "managerFilePatterns": [
+        "/(^|/)(workflow-templates|\\.(?:github|gitea|forgejo)/(?:workflows|actions))/.+\\.ya?ml$/",
+        "/(^|/)action\\.ya?ml$/"
+      ],
+      "fileFormat": "yaml",
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "mise",
+      "packageNameTemplate": "jdx/mise",
+      "matchStrings": [
+        "($append($.jobs.*.steps, $.runs.steps))[$substringBefore(uses, \"@\") = \"jdx/mise-action\"].with.version.{ \"currentValue\": $ }"
+      ]
+    }
+  ],
+  "packageRules": [
+    {
+      "matchDepNames": [
+        "node"
+      ],
+      "ignoreUnstable": false
+    },
+    {
+      "matchDepNames": [
+        "node"
+      ],
+      "matchDatasources": [
+        "node-version"
+      ],
+      "allowedVersions": "!/-/"
+    },
+    {
+      "matchDatasources": [
+        "github-tags"
+      ],
+      "matchPackageNames": [
+        "python/cpython"
+      ],
+      "versioning": "python",
+      "separateMultipleMinor": true
+    },
+    {
+      "matchDepNames": [
+        "mise"
+      ],
+      "automerge": true
+    },
+    {
+      "matchCategories": [
+        "ci"
+      ],
+      "semanticCommitType": "ci"
+    },
+    {
+      "matchFileNames": [
+        "mise.toml"
+      ],
+      "addLabels": [
+        "mise"
+      ]
+    },
+    {
+      "matchDepNames": [
+        "hk"
+      ],
+      "groupName": "hk"
+    },
+    {
+      "matchDepNames": [
+        "hk-config"
+      ],
+      "groupName": "hk-config"
+    },
+    {
+      "matchDatasources": [
+        "github-releases",
+        "github-release-attachments",
+        "github-tags",
+        "docker"
+      ],
+      "matchPackageNames": [
+        "jdx/mise",
+        "jdxcode/mise"
+      ],
+      "groupName": "mise",
+      "groupSingleUpdates": true,
+      "separateMajorMinor": false
+    },
+    {
+      "matchDepNames": [
+        "usage",
+        "usage-lib",
+        "usage_rs"
+      ],
+      "groupName": "usage"
+    },
+    {
+      "matchFileNames": [
+        "**/.mise/locks/**",
+        "**/.config/mise/locks/**"
+      ],
+      "enabled": false
+    }
+  ],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": true,
+    "schedule": [
+      "* 0-5 * * *"
+    ]
+  },
+  "minimumReleaseAge": "0 days"
+}
