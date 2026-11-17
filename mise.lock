@@ -23,3 +23,9 @@ specifiers = ["44.251.0"]
 
 [tools."npm:renovate".options]
 trust_policy_excludes = '["@yarnpkg/libzip@3.2.2"]'
+
+[[tools."npm:semantic-release"]]
+version = "26.0.1"
+aube = { path = ".mise/locks/npm-semantic-release/26.0.1", digest = "sha256:df1e22ebf75d6d352a34d6767dc8116ca6d7afb89297f0d4d18bebb6486de96a" }
+backend = "npm:semantic-release"
+specifiers = ["26.0.1"]
