@@ -5,6 +5,7 @@ min_version = "2026.11.9"
 
 [tools]
 node = "26.13.1"
+"npm:semantic-release" = "26.0.1"
 # @yarnpkg/libzip@3.2.2 has no npm provenance while 3.2.0 and 3.2.1 had it.
 # Checked 2026-11-17: it comes from yarnpkg/berry commit 2eb9830 ("Releasing
 # 16 new packages", 2025-09-18) and was published by a Yarn lead maintainer by
