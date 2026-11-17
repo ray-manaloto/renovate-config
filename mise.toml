@@ -4,8 +4,12 @@
 min_version = "2026.11.9"
 
 [tools]
-bun = "1.4.4"
-"npm:renovate" = "44.251.0"
+node = "26.13.1"
+# @yarnpkg/libzip@3.2.2 has no npm provenance while 3.2.0 and 3.2.1 had it.
+# Checked 2026-11-17: it comes from yarnpkg/berry commit 2eb9830 ("Releasing
+# 16 new packages", 2025-09-18) and was published by a Yarn lead maintainer by
+# hand, so only that version is excused from aube's trust policy.
+"npm:renovate" = { version = "44.251.0", trust_policy_excludes = ["@yarnpkg/libzip@3.2.2"] }
 
 [settings]
 lockfile = true

@@ -31,7 +31,7 @@ Renovate bumps that tag when this repository releases a new one. This repository
 
 ## Checks
 
-`MISE_NPM_PACKAGE_MANAGER=bun mise run check` validates `default.json` and this repository's own config with `renovate-config-validator
+`mise run check` validates `default.json` and this repository's own config with `renovate-config-validator
 --strict`. CI runs it on GitHub-hosted runners; the `CI Check` job is the one required check.
 
 ## License
