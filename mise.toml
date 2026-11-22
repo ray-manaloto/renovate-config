@@ -1,7 +1,7 @@
 # ref: https://mise.jdx.dev/configuration.html
 #:schema https://mise.jdx.dev/schema/mise.json
 
-min_version = "2026.11.9"
+min_version = "2026.11.12"
 
 [tools]
 node = "26.13.1"
@@ -10,7 +10,7 @@ node = "26.13.1"
 # Checked 2026-11-17: it comes from yarnpkg/berry commit 2eb9830 ("Releasing
 # 16 new packages", 2025-09-18) and was published by a Yarn lead maintainer by
 # hand, so only that version is excused from aube's trust policy.
-"npm:renovate" = { version = "44.251.0", trust_policy_excludes = ["@yarnpkg/libzip@3.2.2"] }
+"npm:renovate" = { version = "44.257.9", trust_policy_excludes = ["@yarnpkg/libzip@3.2.2"] }
 
 [settings]
 lockfile = true
