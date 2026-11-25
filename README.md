@@ -32,7 +32,8 @@ Renovate bumps that tag when this repository releases a new one. This repository
 ## Checks
 
 `mise run check` validates `default.json` and this repository's own config with `renovate-config-validator
---strict`. CI runs it on GitHub-hosted runners; the `CI Check` job is the one required check.
+--strict`. Locally, mise uses Node and Renovate from your global tool configuration.
+CI and release jobs install the pinned tools from `.github/ci/mise.toml` and its adjacent lockfile. CI runs it on GitHub-hosted runners; the `CI Check` job is the one required check.
 
 ## License
 

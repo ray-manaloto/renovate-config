@@ -1,0 +1,7 @@
+amends "package://github.com/jdx/hk/releases/download/v2.14.0/hk@2.14.0#/Config.pkl"
+
+steps {
+  ["renovate-config"] {
+    check = "mise run check"
+  }
+}
